@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Player.h"
 #include "Priest.h"
 #include "Mage.h"
@@ -7,41 +8,46 @@
 
 using namespace std;
 
-enum PROFESSION{WARRIOR, PRIEST, MAGE};
+enum Profession{WARRIOR, PRIEST, MAGE};
 
-void printPlayerInfo(vector<Player*>& playerVector);
-void createNewPlayer(vector<Player*>& playerVector);
+void printAllInfo(vector<Player*>& playerVector);
+Player* createPlayer(string playerName, Race playerRace, Profession playerProfession);
 void deallocatePlayers(vector<Player*>& playerVector);
-Race chooseRace();
-PROFESSION chooseProfession();
+Race getRace();
+Profession getProfession();
+string getName();
 
 int main()
 {
-	bool addMorePlayers = true;
-	char tempAnswer;
-	vector<Player*> players;
+	string addAnother = "y";
+	vector<Player*> charactersVector;
 	
-	while (addMorePlayers)
+	while (addAnother == "y")
 	{
 		cout << "Do you want to create a new player? " << endl
 			<< "Yes(y) or No(n)" << endl;
-		cin >> tempAnswer;
-		if (tempAnswer == 'y')
+		cin >> addAnother;
+
+		if (addAnother == "y")
 		{
-			createNewPlayer(players);
+			Race playerRace = getRace();
+			Profession playerProfession = getProfession();
+			string playerName = getName();
+			Player * newPlayer = createPlayer(playerName, playerRace, playerProfession);
+			charactersVector.push_back(newPlayer);
 		}
 		else
 		{
-			addMorePlayers = false;
+			addAnother = "n";
 		}
 	}
 
-	printPlayerInfo(players);
-	deallocatePlayers(players);
+	printAllInfo(charactersVector);
+	deallocatePlayers(charactersVector);
 	return 0;
 }
 
-void printPlayerInfo(vector<Player*>& playerVector)
+void printAllInfo(vector<Player*>& playerVector)
 {
 	if (!playerVector.empty())
 	{
@@ -49,7 +55,6 @@ void printPlayerInfo(vector<Player*>& playerVector)
 		{
 			cout << "I am a " << playerPtr->whatRace() << " and my attack is: " << endl << "\t"
 				<< playerPtr->attack() << endl;
-
 		}
 	}
 	else
@@ -60,36 +65,19 @@ void printPlayerInfo(vector<Player*>& playerVector)
 
 }
 
-void createNewPlayer(vector<Player*>& playerVector)
+Player* createPlayer(string playerName, Race playerRace, Profession playerProfession)
 {
-	string tempName;
-	Race tempRace;
-	PROFESSION tempProf;
-	
-	tempRace = chooseRace();
-	tempProf = chooseProfession();
 
-	cout << "What is your characters name? " << endl;
-	cin >> tempName;
-
-	cout << "The race is: " << tempRace << endl;
-	
-	if (!tempName.empty() && tempProf>=0 && tempRace>=0) {
-		switch (tempProf)
-		{
-			case 0: 
-				playerVector.push_back(new Warrior(tempName, tempRace));
-				break;
-			case 1: 
-				playerVector.push_back(new Priest(tempName, tempRace));
-				break;
-			case 2: 
-				playerVector.push_back(new Mage(tempName, tempRace));
-				break;
-			default:
-				cout << "Invalid Profession selected!";
-				break;
-		}	
+	switch (playerProfession)
+	{
+	case 0:
+		return new Warrior(playerName, playerRace);
+	case 1:
+		return new Priest(playerName, playerRace);
+	case 2:
+		return new Mage(playerName, playerRace);
+	default:
+		cout << "Invalid Profession selected!";
 	}
 
 }
@@ -103,7 +91,7 @@ void deallocatePlayers(vector<Player*>& playerVector)
 	playerVector.clear();
 }
 
-Race chooseRace()
+Race getRace()
 {
 	Race tempRace;
 	int userInput = 0;
@@ -118,6 +106,7 @@ Race chooseRace()
 			<< "4. Orc" << endl
 			<< "5. Troll" << endl;
 		cin >> userInput;
+		cin.get(); // consume newline
 	}
 
 
@@ -135,9 +124,9 @@ Race chooseRace()
 		
 }	
 
-PROFESSION chooseProfession()
+Profession getProfession()
 {
-	PROFESSION tempProf;
+	Profession tempProf;
 	int userInput = 0;
 
 	while (userInput < 1 || userInput > 3)
@@ -147,9 +136,7 @@ PROFESSION chooseProfession()
 			<< "1. Warrior: A strong melee fighter. Me, smash!" << endl
 			<< "2. Priest: A support character. Good in keeping other players alive!" << endl
 			<< "3. Mage: A long rage magic user. Good at burning things from affar!" << endl;
-
 		cin >> userInput;
-	
 	}
 
 	switch (userInput) {
@@ -160,4 +147,14 @@ PROFESSION chooseProfession()
 		cout << "There was an issue, your character was assigned the default Profession of Warrior" << endl;
 		return WARRIOR;
 	}
+}
+
+string getName()
+{
+	string playerName;
+	cout << "What is your characters name? " << endl;
+	cin >> playerName;
+
+	return playerName;
+
 }
