@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Mage::Mage(string name, RACE race) :
+Mage::Mage(string name, Race race) :
 	Player(name, race, 150, 150)
 {
 

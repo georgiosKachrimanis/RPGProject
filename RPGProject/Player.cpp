@@ -2,7 +2,7 @@
 
 
 
-Player::Player(string name, RACE race, int hitPoints, int magicPoints)
+Player::Player(string name, Race race, int hitPoints, int magicPoints)
 {
 	this->name = name;
 	this->race = race;
@@ -10,18 +10,46 @@ Player::Player(string name, RACE race, int hitPoints, int magicPoints)
 	this->magicPoints = magicPoints;
 }
 
+// --------------------------- Getters ----------------------------
 string Player::getName() const
 {
 	return name;
 }
 
-RACE Player::getRace() const
+Race Player::getRace() const
 {
 	return race;
 }
 
 string Player::whatRace() const
 {
+	// This is the code from the course
+	string result = "";
+	if (race == HUMAN)
+	{
+		result = "Human";
+	}
+	else if (race == ELF)
+	{
+		result = "Elf";
+	}
+	else if (race == DWARF)
+	{
+		result = "Dwarf";
+	}
+	else if (race == ORC)
+	{
+		result = "Orc";
+	}
+	else 
+	{
+		result = "Troll";
+	}
+	
+	return result;
+
+	//This is the code from my implimantation 
+	/*
 	switch (this->race) {
 	case HUMAN: return "Human";
 	case ELF: return "Elf";
@@ -30,6 +58,7 @@ string Player::whatRace() const
 	case TROLL: return "Troll";
 	default: return "Human";
 	}
+	*/
 }
 
 int Player::getHitPoints() const
@@ -42,12 +71,13 @@ int Player::getMagicPoints() const
 	return magicPoints;
 }
 
+// --------------------------- Setters ----------------------------
 void Player::setName(string name)
 {
 	this->name = name;
 }
 
-void Player::setRace(RACE race)
+void Player::setRace(Race race)
 {
 	this->race = race;
 }

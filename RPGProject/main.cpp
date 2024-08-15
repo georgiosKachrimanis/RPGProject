@@ -12,7 +12,7 @@ enum PROFESSION{WARRIOR, PRIEST, MAGE};
 void printPlayerInfo(vector<Player*>& playerVector);
 void createNewPlayer(vector<Player*>& playerVector);
 void deallocatePlayers(vector<Player*>& playerVector);
-RACE chooseRace();
+Race chooseRace();
 PROFESSION chooseProfession();
 
 int main()
@@ -63,7 +63,7 @@ void printPlayerInfo(vector<Player*>& playerVector)
 void createNewPlayer(vector<Player*>& playerVector)
 {
 	string tempName;
-	RACE tempRace;
+	Race tempRace;
 	PROFESSION tempProf;
 	
 	tempRace = chooseRace();
@@ -103,9 +103,9 @@ void deallocatePlayers(vector<Player*>& playerVector)
 	playerVector.clear();
 }
 
-RACE chooseRace()
+Race chooseRace()
 {
-	RACE tempRace;
+	Race tempRace;
 	int userInput = 0;
 
 	while (userInput < 1 || userInput > 5)

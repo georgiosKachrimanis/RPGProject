@@ -5,8 +5,16 @@
 class Priest : public Player
 {
 public:
-	Priest(string name, RACE race);
-	string attack() const;
+	Priest(string name, Race race) :
+		Player(name, race, 100, 200)
+	{
+
+	}
+
+	string attack() const
+	{
+		return "I will assault you with Holy Wrath!";
+	}
 };
 
 #endif // !PRIEST_H

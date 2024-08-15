@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Priest::Priest(string name, RACE race) : 
+Priest::Priest(string name, Race race) : 
 	Player(name,race, 100,200)
 {
 
